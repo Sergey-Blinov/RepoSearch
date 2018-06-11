@@ -17,6 +17,7 @@ struct GitRepoConstants {
     static let page = "page"
     static let perPage = "per_page"
     static let desc = "desc"
+    static let items = "items"
 }
 
 class GitRepoService {
@@ -34,7 +35,7 @@ class GitRepoService {
                                                                    method: RequestMethod.Get,
                                                                    success: { (object) in
                                                                     if let dictionary = object as? [String : AnyObject],
-                                                                        let array = dictionary["items"] as? [[String : AnyObject]] {
+                                                                        let array = dictionary[GitRepoConstants.items] as? [[String : AnyObject]] {
                                                                         var items = [GitRepo]()
                                                                         let closure: ([String: Any]) -> GitRepo?
                                                                         closure = { dictionary in return GitRepo(dictionary) }
@@ -58,6 +59,9 @@ class GitRepoService {
             task.cancel()
         }
     }
+}
+
+private extension GitRepoService {
     
     private func urlStringWith( _ page: Page, query: String) -> String? {
         
@@ -76,3 +80,4 @@ class GitRepoService {
         return urlComponents.url?.absoluteString
     }
 }
+

@@ -28,11 +28,6 @@ class MainVC: UIViewController {
         super.didReceiveMemoryWarning()
     }
     
-    func presenSelectedItem(_ item: GitRepo) -> Void {
-        self.selectedItemUrlString = item.urlString
-        self.performSegue(withIdentifier:RepoWebViewVC.className, sender: self)
-    }
-    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if let controller = segue.destination as? RepoWebViewVC,
             let popoverPresentationController = controller.popoverPresentationController,
@@ -99,7 +94,7 @@ extension MainVC: UIPopoverPresentationControllerDelegate {
     }
 }
 
-// MARK: - Private methods
+// MARK: - Private functions
 
 private extension MainVC {
     
@@ -120,5 +115,10 @@ private extension MainVC {
     func setupTableView() -> Void {
         self.activityIndicatorView = UIActivityIndicatorView(activityIndicatorStyle: .gray)
         self.tableView.backgroundView = activityIndicatorView
+    }
+    
+    func presenSelectedItem(_ item: GitRepo) -> Void {
+        self.selectedItemUrlString = item.urlString
+        self.performSegue(withIdentifier:RepoWebViewVC.className, sender: self)
     }
 }

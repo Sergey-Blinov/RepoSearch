@@ -15,6 +15,7 @@ enum RequestMethod: String {
 }
 
 class RequestsManager: NSObject, URLSessionDelegate {
+    
     var session = URLSession();
     var configuration = URLSessionConfiguration();
 

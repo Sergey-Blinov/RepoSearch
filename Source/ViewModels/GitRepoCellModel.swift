@@ -9,6 +9,7 @@
 import Foundation
 
 struct GitRepoCellModel {
+    
     let name: String!
     let stringURL: String!
     let devLanguage: String!

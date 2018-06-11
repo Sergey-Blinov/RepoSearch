@@ -59,29 +59,6 @@ class GitRepoListDataSource: NSObject {
             }
         }
     }
-    
-    // MARK: - Private methods
-    
-    private func insert(_ items:[GitRepo]) {
-        for object in items {
-            self.items.insert(object, at: self.items.count)
-            self.insertRow(index: self.items.count - 1)
-        }
-    }
-    
-    private func insertRow(index:Int) {
-        self.tableView.beginUpdates()
-        self.tableView.insertRows(at: [IndexPath(row: index, section: 0)], with: .automatic)
-        self.tableView.endUpdates()
-    }
-    
-    private  func configure(_ tableView:  UITableView, _ delegate: GitRepoListDataSourceDelegate) {
-        self.tableView = tableView
-        self.delegate = delegate
-        self.tableView.dataSource = self
-        self.tableView.delegate = self
-        self.tableView.reloadData()
-    }
 }
 
 extension GitRepoListDataSource: UITableViewDataSource {
@@ -107,5 +84,31 @@ extension GitRepoListDataSource: UITableViewDelegate {
         guard let delegate = self.delegate else { return }
         let item = self.items[indexPath.row]
         delegate.didSelect(item)
+    }
+}
+
+// MARK: - Private functions
+
+private extension GitRepoListDataSource {
+    
+    private func insert(_ items:[GitRepo]) {
+        for object in items {
+            self.items.insert(object, at: self.items.count)
+            self.insertRow(index: self.items.count - 1)
+        }
+    }
+    
+    private func insertRow(index:Int) {
+        self.tableView.beginUpdates()
+        self.tableView.insertRows(at: [IndexPath(row: index, section: 0)], with: .automatic)
+        self.tableView.endUpdates()
+    }
+    
+    private  func configure(_ tableView:  UITableView, _ delegate: GitRepoListDataSourceDelegate) {
+        self.tableView = tableView
+        self.delegate = delegate
+        self.tableView.dataSource = self
+        self.tableView.delegate = self
+        self.tableView.reloadData()
     }
 }
