@@ -19,15 +19,14 @@ class GitRepoListDataSource: NSObject {
     
     private weak var tableView: UITableView!
     private let gitRepoStore = GitRepoStore()
-    
     var items: [GitRepo] = []
-    var itemIndex: Int = 0
+    
     weak var delegate: GitRepoListDataSourceDelegate?
     
     init(tableView: UITableView, delegate: GitRepoListDataSourceDelegate) {
         super.init()
         self.configure(tableView, delegate)
-        guard let repoItems = gitRepoStore.loadItems() else { return }
+        guard let repoItems = self.gitRepoStore.loadItems() else { return }
         self.items = repoItems
         self.tableView.reloadData()
     }

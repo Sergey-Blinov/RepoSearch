@@ -41,7 +41,7 @@ class GitRepoStore {
                 return requestWorkItem
         }
         
-        for item in workItems {
+        for item in self.workItems {
             if (item.isCancelled) {
                 break
             }

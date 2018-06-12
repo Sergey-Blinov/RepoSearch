@@ -44,10 +44,7 @@ class MainVC: UIViewController {
 extension MainVC: GitRepoListDataSourceDelegate {
     
     func loadingError(error: Error?) {
-        if self.activityIndicatorView.isAnimating {
-            self.activityIndicatorView.stopAnimating()
-        }
-        
+        self.stopShowActivity()
         var message = ERROR_MESSAGE
         
         if let error = error {
@@ -66,9 +63,7 @@ extension MainVC: GitRepoListDataSourceDelegate {
     
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
         self.dataSource.cancelSearch()
-        if self.activityIndicatorView.isAnimating {
-            self.activityIndicatorView.stopAnimating()
-        }
+        self.stopShowActivity()
     }
 }
 
@@ -97,6 +92,12 @@ extension MainVC: UIPopoverPresentationControllerDelegate {
 // MARK: - Private functions
 
 private extension MainVC {
+    
+    func stopShowActivity() -> Void {
+        if self.activityIndicatorView.isAnimating {
+            self.activityIndicatorView.stopAnimating()
+        }
+    }
     
     func setupSearchController() -> Void  {
         self.searchController = UISearchController(searchResultsController:  nil)
