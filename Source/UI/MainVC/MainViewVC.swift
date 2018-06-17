@@ -20,7 +20,7 @@ class MainVC: UIViewController {
         super.viewDidLoad()
         self.title = MAINVC_TITLE
         self.setupTableView()
-        self.dataSource = GitRepoListDataSource.init(tableView: self.tableView, delegate: self)
+        self.dataSource = GitRepoListDataSource.init(delegate: self)
         self.setupSearchController()
     }
     
@@ -42,6 +42,10 @@ class MainVC: UIViewController {
 }
 
 extension MainVC: GitRepoListDataSourceDelegate {
+    
+    func currentTableView() -> UITableView {
+        return self.tableView
+    }
     
     func loadingError(error: Error?) {
         self.stopShowActivity()

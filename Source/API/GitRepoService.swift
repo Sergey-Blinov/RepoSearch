@@ -20,7 +20,7 @@ struct GitRepoConstants {
     static let items = "items"
 }
 
-class GitRepoService {
+class GitRepoService: GitRepoServiceProtocol {
     
     private var tasks = [URLSessionDataTask?]()
     

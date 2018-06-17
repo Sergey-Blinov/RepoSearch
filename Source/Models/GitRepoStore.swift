@@ -10,8 +10,12 @@ import Foundation
 
 class GitRepoStore {
     
-    private let gitRepoService = API.gitRepoServise
+    private var gitRepoService: GitRepoServiceProtocol!
     private var workItems = [DispatchWorkItem]()
+    
+    init(service: GitRepoServiceProtocol) {
+        self.gitRepoService = service
+    }
     
     func getRepoItems(query: String,
                       success: @escaping (_ response: [GitRepo]) -> Void,
@@ -27,12 +31,12 @@ class GitRepoStore {
                 let requestWorkItem = DispatchWorkItem { [weak self] in
                     group.enter()
                     guard let strongSelf = self else { return }
-                    strongSelf .gitRepoService.getRepoItems(page: page,
-                                                            query: query,
-                                                            success: { (items) in
-                                                                collection.append(contentsOf: items)
-                                                                group.leave()
-                                                                
+                    strongSelf.gitRepoService.getRepoItems(page: page,
+                                                           query: query,
+                                                           success: { (items) in
+                                                            collection.append(contentsOf: items)
+                                                            group.leave()
+                                                            
                     }, failure: { (error) in
                         failure(error)
                     })
@@ -59,9 +63,7 @@ class GitRepoStore {
     
     func cancelSearch() -> Void {
         self.gitRepoService.cancel()
-        self.workItems.forEach { (item) in
-            item.cancel()
-        }
+        self.workItems.forEach { ($0.cancel()) }
     }
     
     func saveItems(items: [GitRepo]) {

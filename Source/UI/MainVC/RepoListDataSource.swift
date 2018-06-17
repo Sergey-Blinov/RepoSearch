@@ -9,6 +9,7 @@
 import UIKit
 
 protocol  GitRepoListDataSourceDelegate: class {
+    func currentTableView() -> UITableView
     func beginLoadItems() -> Void
     func endLoadItems() -> Void
     func loadingError(error: Error?) -> Void
@@ -18,14 +19,15 @@ protocol  GitRepoListDataSourceDelegate: class {
 class GitRepoListDataSource: NSObject {
     
     private weak var tableView: UITableView!
-    private let gitRepoStore = GitRepoStore()
+    private var gitRepoStore: GitRepoStore!
     var items: [GitRepo] = []
     
     weak var delegate: GitRepoListDataSourceDelegate?
     
-    init(tableView: UITableView, delegate: GitRepoListDataSourceDelegate) {
+    init(delegate: GitRepoListDataSourceDelegate) {
         super.init()
-        self.configure(tableView, delegate)
+        self.gitRepoStore = GitRepoStore.init(service: API.gitRepoServise)
+        self.configure(delegate)
         guard let repoItems = self.gitRepoStore.loadItems() else { return }
         self.items = repoItems
         self.tableView.reloadData()
@@ -103,8 +105,8 @@ private extension GitRepoListDataSource {
         self.tableView.endUpdates()
     }
     
-    private  func configure(_ tableView:  UITableView, _ delegate: GitRepoListDataSourceDelegate) {
-        self.tableView = tableView
+    private  func configure( _ delegate: GitRepoListDataSourceDelegate) {
+        self.tableView = delegate.currentTableView()
         self.delegate = delegate
         self.tableView.dataSource = self
         self.tableView.delegate = self
