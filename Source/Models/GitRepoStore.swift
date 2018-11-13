@@ -14,14 +14,14 @@ class GitRepoStore {
     private var workItems = [DispatchWorkItem]()
     private var storage: LocalStorage
     
-    init(service: GitRepoServiceProtocol,storage: LocalStorage = LocalStorage.shared) {
+    init(service: GitRepoServiceProtocol, storage: LocalStorage = LocalStorage.shared) {
         self.gitRepoService = service
         self.storage = storage
     }
     
     func getRepoItems(query: String,
                       success: @escaping (_ response: [GitRepo]) -> Void,
-                      failure: @escaping (_ error: Error?) -> Void ) -> Void {
+                      failure: @escaping (_ error: Error?) -> Void) -> Void {
         let group = DispatchGroup()
         var collection = [GitRepo]()
         
@@ -37,9 +37,7 @@ class GitRepoStore {
                                                             collection.append(contentsOf: items)
                                                             group.leave()
 
-                    }, failure: { (error) in
-                        failure(error)
-                    })
+                    }, failure: failure)
                 }
                 
                 return requestWorkItem
@@ -53,13 +51,13 @@ class GitRepoStore {
         group.notify(queue: .main) { [weak self] in
             let items = collection.sorted { $0.starsValue > $1.starsValue }
             guard let strongSelf = self else { return }
-            strongSelf.clearStore()
+            strongSelf.clearItems()
             strongSelf.saveItems(items: items)
             success(items)
         }
     }
     
-    func cancelSearch() -> Void {
+    func cancelSearch() {
         self.gitRepoService.cancel()
         self.workItems.forEach { $0.cancel() }
     }
@@ -72,7 +70,7 @@ class GitRepoStore {
         return storage.gitItems
     }
     
-    func clearStore() -> Void {
+    func clearItems() {
         UserDefaults.standard.removeObject(forKey: REPO_ITEMS)
     }
 }

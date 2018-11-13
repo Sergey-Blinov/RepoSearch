@@ -122,13 +122,13 @@
 		A589F3F01ED091B500ACE8FD /* Source */ = {
 			isa = PBXGroup;
 			children = (
+				A643A051219B08C800946BF7 /* LocalStorage.swift */,
 				A5066AD520CC16200005D631 /* Constants.swift */,
 				A58C7DD020CB1CE10058D29B /* Extensions */,
 				A589F3F11ED091B500ACE8FD /* API */,
 				A5066ADC20CC83710005D631 /* ViewModels */,
 				A5DD6AA41ED8BE410099727A /* Models */,
 				A589F3F31ED091B500ACE8FD /* UI */,
-				A643A051219B08C800946BF7 /* LocalStorage.swift */,
 			);
 			path = Source;
 			sourceTree = "<group>";

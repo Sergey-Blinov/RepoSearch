@@ -42,11 +42,11 @@ class MainVC: UIViewController {
 }
 
 extension MainVC: GitRepoListDataSourceDelegate {
-    
-    func currentTableView() -> UITableView {
+
+    var currentTableView: UITableView {
         return self.tableView
     }
-    
+
     func loadingError(error: Error?) {
         self.stopShowActivity()
         var message = ERROR_MESSAGE

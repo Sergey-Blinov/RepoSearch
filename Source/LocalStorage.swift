@@ -7,11 +7,11 @@
 //
 
 import Foundation
-import UIKit
 
 protocol KeyValueStore {
     func object(forKey defaultName: String) -> Any?
     func set(_ value: Any?, forKey defaultName: String) -> Void
+    func removeObject(forKey defaultName: String) -> Void
 }
 
 extension UserDefaults : KeyValueStore {}
@@ -38,4 +38,9 @@ class LocalStorage {
             keyValueStore.set(placesData, forKey: REPO_ITEMS)
         }
     }
+
+    func clearItems() {
+        keyValueStore.removeObject(forKey: REPO_ITEMS)
+    }
+
 }

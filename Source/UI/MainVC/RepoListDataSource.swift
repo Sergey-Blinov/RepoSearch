@@ -9,7 +9,7 @@
 import UIKit
 
 protocol  GitRepoListDataSourceDelegate: class {
-    func currentTableView() -> UITableView
+    var currentTableView: UITableView { get }
     func beginLoadItems() -> Void
     func endLoadItems() -> Void
     func loadingError(error: Error?) -> Void
@@ -39,8 +39,8 @@ class GitRepoListDataSource: NSObject {
     
     func clearItems() -> Void {
         self.items = [GitRepo]()
+        self.gitRepoStore.clearItems()
         self.tableView.reloadData()
-        self.gitRepoStore.clearStore()
     }
     
     func searchRepositories(_ query: String) -> Void {
@@ -106,7 +106,7 @@ private extension GitRepoListDataSource {
     }
     
     private  func configure( _ delegate: GitRepoListDataSourceDelegate) {
-        self.tableView = delegate.currentTableView()
+        self.tableView = delegate.currentTableView
         self.delegate = delegate
         self.tableView.dataSource = self
         self.tableView.delegate = self
