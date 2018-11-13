@@ -8,7 +8,9 @@
 
 import Foundation
 
-class GitRepoStore {
+protocol Store { }
+
+class GitRepoStore: Store {
     
     private var gitRepoService: GitRepoServiceProtocol
     private var workItems = [DispatchWorkItem]()
@@ -33,16 +35,16 @@ class GitRepoStore {
                     guard let strongSelf = self else { return }
                     strongSelf.gitRepoService.getRepoItems(page: page,
                                                            query: query,
-                                                           success: { (items) in
+                                                           success: { items in
                                                             collection.append(contentsOf: items)
                                                             group.leave()
-
+                                                            
                     }, failure: failure)
                 }
                 
                 return requestWorkItem
         }
-        
+
         for item in self.workItems {
             if item.isCancelled { break }
             DispatchQueue.global().async(group: group, execute:  item)
@@ -63,14 +65,14 @@ class GitRepoStore {
     }
     
     func saveItems(items: [GitRepo]) {
-        storage.gitItems = items
+        self.storage.gitItems = items
     }
     
     func loadItems() -> [GitRepo]? {
-        return storage.gitItems
+        return self.storage.gitItems
     }
     
     func clearItems() {
-        UserDefaults.standard.removeObject(forKey: REPO_ITEMS)
+        self.storage.clearItems()
     }
 }

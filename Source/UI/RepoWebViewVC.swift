@@ -20,19 +20,13 @@ class RepoWebViewVC: UIViewController {
         super.viewDidLoad()
         self.loadWebPage()
     }
-    
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-    }
-    
+
     @IBAction func dismissButtonPressed(_ sender: AnyObject?) {
         self.dismiss(animated: true, completion: nil)
     }
     
-    private  func loadWebPage() -> Void {
-        guard let stringUrl = self.stringUrl,
-            let url = URL(string: stringUrl)
-            else { return }
+    private func loadWebPage() -> Void {
+        guard let stringUrl = self.stringUrl, let url = URL(string: stringUrl) else { return }
         self.webView.delegate = self
         self.webView.loadRequest(URLRequest(url:url))
     }

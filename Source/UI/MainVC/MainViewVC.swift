@@ -20,7 +20,8 @@ class MainVC: UIViewController {
         super.viewDidLoad()
         self.title = MAINVC_TITLE
         self.setupTableView()
-        self.dataSource = GitRepoListDataSource.init(delegate: self)
+        self.dataSource = GitRepoListDataSource(tableView: self.tableView, loadingDelegate: self)
+        self.dataSource.didSelect =  { item in self.didSelect(item) }
         self.setupSearchController()
     }
     
@@ -36,28 +37,35 @@ class MainVC: UIViewController {
             segue.destination.popoverPresentationController?.delegate = self
             popoverPresentationController.permittedArrowDirections = UIPopoverArrowDirection(rawValue: 0)
             popoverPresentationController.sourceView = self.tableView
-            popoverPresentationController.sourceView?.center = self.tableView.center
+            popoverPresentationController.sourceView?.center = self.view.center
         }
     }
 }
 
-extension MainVC: GitRepoListDataSourceDelegate {
-
-    var currentTableView: UITableView {
-        return self.tableView
+extension MainVC: GitRepoLoadingDelegate {
+    
+    func beginLoadItems() {
+        self.activityIndicatorView.startAnimating()
     }
-
-    func loadingError(error: Error?) {
+    
+    func endLoadItems(_ error: Error?) {
         self.stopShowActivity()
+        guard let error = error else { return }
         var message = ERROR_MESSAGE
         
-        if let error = error {
+        if !error.localizedDescription.isEmpty {
             message = error.localizedDescription
         }
         
-        self.presentAlert(title: ERROR,
-                          message: message, okHandler: nil, cancelHandler: nil)
+        self.presentAlert(title: ERROR, message: message, okHandler: nil, cancelHandler: nil)
     }
+    
+    func didSelect(_ item: GitRepo) {
+        self.presenSelectedItem(item)
+    }
+}
+
+extension MainVC: UISearchBarDelegate {
     
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         guard let text = searchBar.text else { return }
@@ -68,21 +76,6 @@ extension MainVC: GitRepoListDataSourceDelegate {
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
         self.dataSource.cancelSearch()
         self.stopShowActivity()
-    }
-}
-
-extension MainVC: UISearchBarDelegate {
-    
-    func beginLoadItems() {
-        self.activityIndicatorView.startAnimating()
-    }
-    
-    func endLoadItems() {
-        self.activityIndicatorView.stopAnimating()
-    }
-    
-    func didSelect(_ item: GitRepo) {
-        self.presenSelectedItem(item)
     }
 }
 

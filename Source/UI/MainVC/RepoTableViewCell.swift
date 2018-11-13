@@ -13,17 +13,9 @@ class RepoTableViewCell: UITableViewCell {
     @IBOutlet var languageLabel: UILabel!
     @IBOutlet var starsCountLabel: UILabel!
     
-    override func awakeFromNib() {
-        super.awakeFromNib()
-    }
-    
-    override func setSelected(_ selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
-    }
-    
-    public func fillWith(_ model: GitRepoCellModel) -> Void {
+    public func fillWith(_ model: GitRepoCellModel) {
         self.titleLabel.text = model.name
-        self.starsCountLabel.text = String(model.stars)
+        self.starsCountLabel.text = model.stars
         self.languageLabel.text = model.devLanguage
     }
 }

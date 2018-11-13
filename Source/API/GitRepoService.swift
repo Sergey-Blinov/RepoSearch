@@ -33,24 +33,23 @@ class GitRepoService: GitRepoServiceProtocol {
                       success: @escaping (_ response: [GitRepo]) -> Void,
                       failure: @escaping (_ error: Error?) -> Void ) -> Void {
         guard let urlString =  self.urlStringWith(page, query: query) else { return }
-        let task = provider.withURL(urlString: urlString,
-                                    body: nil,
-                                    head: nil,
-                                    method: .get,
-                                    success: { object in
-                                        guard let dictionary = object as? [String : AnyObject],
-                                            let array = dictionary[GitRepoConstants.items] as? [[String : AnyObject]] else {
-                                                failure(nil)
-                                                return
-                                        }
-
-                                        let items = array.compactMap { dictionary in return GitRepo(dictionary) }
-                                        DispatchQueue.main.async { success(items) }
+        self.tasks.append(provider.withURL(urlString: urlString,
+                                           body: nil,
+                                           head: nil,
+                                           method: .get,
+                                           success: { object in
+                                            guard let dictionary = object as? [String : AnyObject],
+                                                let array = dictionary[GitRepoConstants.items] as? [[String : AnyObject]] else {
+                                                    failure(nil)
+                                                    return
+                                            }
+                                            
+                                            let items = array.compactMap { dictionary in return GitRepo(dictionary) }
+                                            DispatchQueue.main.async { success(items) }
         },
-                                    failure: failure)
-        self.tasks.append(task)
+                                           failure: failure))
     }
-
+    
     func cancel() {
         self.tasks.forEach { $0?.cancel() }
     }
