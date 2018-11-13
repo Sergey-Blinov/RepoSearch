@@ -23,9 +23,9 @@ protocol NetworkProvider {
                  failure: @escaping (_ error: Error?) -> Void ) -> URLSessionDataTask?
 }
 
-class RequestsManager: NSObject, URLSessionDelegate, NetworkProvider {
+class RequestsProvider: NSObject, URLSessionDelegate, NetworkProvider {
 
-    static let shared = RequestsManager()
+    static let shared = RequestsProvider()
 
     var session: URLSession
 

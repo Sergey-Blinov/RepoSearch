@@ -9,11 +9,11 @@
 import Foundation
 
 struct GitRepoCellModel {
-    
-    let name: String!
-    let stringURL: String!
-    let devLanguage: String!
-    let stars: String!
+
+    let name: String
+    let stringURL: String
+    let devLanguage: String
+    let stars: String
     
     init(_ repoItem: GitRepo) {
         self.name = repoItem.name

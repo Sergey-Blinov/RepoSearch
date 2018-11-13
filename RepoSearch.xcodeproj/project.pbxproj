@@ -20,12 +20,13 @@
 		A589F3DD1ED0915100ACE8FD /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A589F3DC1ED0915100ACE8FD /* AppDelegate.swift */; };
 		A589F3ED1ED0917300ACE8FD /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A589F3E81ED0917300ACE8FD /* Assets.xcassets */; };
 		A589F3EE1ED0917300ACE8FD /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A589F3E91ED0917300ACE8FD /* LaunchScreen.storyboard */; };
-		A589F3F71ED091B500ACE8FD /* RequestsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A589F3F21ED091B500ACE8FD /* RequestsManager.swift */; };
+		A589F3F71ED091B500ACE8FD /* RequestsProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = A589F3F21ED091B500ACE8FD /* RequestsProvider.swift */; };
 		A589F3F91ED091B500ACE8FD /* RepoWebViewVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A589F3F51ED091B500ACE8FD /* RepoWebViewVC.swift */; };
 		A5A18891200E0D84002FD583 /* RepoListDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5A18890200E0D84002FD583 /* RepoListDataSource.swift */; };
 		A5C7D35F20C9D920007D95D0 /* API.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5C7D35E20C9D920007D95D0 /* API.swift */; };
 		A5DD6AA61ED8BE6F0099727A /* GitRepo.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5DD6AA51ED8BE6F0099727A /* GitRepo.swift */; };
 		A5EE7E2A1FF262FA007A00A7 /* GitRepoService.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5EE7E291FF262FA007A00A7 /* GitRepoService.swift */; };
+		A643A052219B08C800946BF7 /* LocalStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = A643A051219B08C800946BF7 /* LocalStorage.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -44,12 +45,13 @@
 		A589F3DC1ED0915100ACE8FD /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		A589F3E81ED0917300ACE8FD /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		A589F3EA1ED0917300ACE8FD /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
-		A589F3F21ED091B500ACE8FD /* RequestsManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RequestsManager.swift; sourceTree = "<group>"; };
+		A589F3F21ED091B500ACE8FD /* RequestsProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RequestsProvider.swift; sourceTree = "<group>"; };
 		A589F3F51ED091B500ACE8FD /* RepoWebViewVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RepoWebViewVC.swift; sourceTree = "<group>"; };
 		A5A18890200E0D84002FD583 /* RepoListDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RepoListDataSource.swift; sourceTree = "<group>"; };
 		A5C7D35E20C9D920007D95D0 /* API.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = API.swift; sourceTree = "<group>"; };
 		A5DD6AA51ED8BE6F0099727A /* GitRepo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GitRepo.swift; sourceTree = "<group>"; };
 		A5EE7E291FF262FA007A00A7 /* GitRepoService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GitRepoService.swift; sourceTree = "<group>"; };
+		A643A051219B08C800946BF7 /* LocalStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalStorage.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -126,6 +128,7 @@
 				A5066ADC20CC83710005D631 /* ViewModels */,
 				A5DD6AA41ED8BE410099727A /* Models */,
 				A589F3F31ED091B500ACE8FD /* UI */,
+				A643A051219B08C800946BF7 /* LocalStorage.swift */,
 			);
 			path = Source;
 			sourceTree = "<group>";
@@ -135,7 +138,7 @@
 			children = (
 				A5C7D35E20C9D920007D95D0 /* API.swift */,
 				A5EE7E291FF262FA007A00A7 /* GitRepoService.swift */,
-				A589F3F21ED091B500ACE8FD /* RequestsManager.swift */,
+				A589F3F21ED091B500ACE8FD /* RequestsProvider.swift */,
 			);
 			path = API;
 			sourceTree = "<group>";
@@ -261,9 +264,10 @@
 				A5066AE120CC89650005D631 /* GitRepoStore.swift in Sources */,
 				A55B497120CBF8700015F0AC /* NSObject+Extensions.swift in Sources */,
 				A5066AD620CC16200005D631 /* Constants.swift in Sources */,
-				A589F3F71ED091B500ACE8FD /* RequestsManager.swift in Sources */,
+				A589F3F71ED091B500ACE8FD /* RequestsProvider.swift in Sources */,
 				A5EE7E2A1FF262FA007A00A7 /* GitRepoService.swift in Sources */,
 				A5066AE520CD68240005D631 /* UIViewController+Alerts.swift in Sources */,
+				A643A052219B08C800946BF7 /* LocalStorage.swift in Sources */,
 				A5066ADE20CC83780005D631 /* GitRepoCellModel.swift in Sources */,
 				A5C7D35F20C9D920007D95D0 /* API.swift in Sources */,
 				A5A18891200E0D84002FD583 /* RepoListDataSource.swift in Sources */,

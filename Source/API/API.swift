@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct API {
+enum API {
     static let gitRepoServise = GitRepoService()
 }
 

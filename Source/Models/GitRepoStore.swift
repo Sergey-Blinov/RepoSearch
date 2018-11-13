@@ -10,11 +10,13 @@ import Foundation
 
 class GitRepoStore {
     
-    private var gitRepoService: GitRepoServiceProtocol!
+    private var gitRepoService: GitRepoServiceProtocol
     private var workItems = [DispatchWorkItem]()
+    private var storage: LocalStorage
     
-    init(service: GitRepoServiceProtocol) {
+    init(service: GitRepoServiceProtocol,storage: LocalStorage = LocalStorage.shared) {
         self.gitRepoService = service
+        self.storage = storage
     }
     
     func getRepoItems(query: String,
@@ -24,9 +26,7 @@ class GitRepoStore {
         var collection = [GitRepo]()
         
         self.workItems = Array(1...PAGE_COUNT)
-            .map { (pageIndex: Int) -> (Page) in
-                return Page(index: pageIndex, perPage: PER_PAGE)
-            }
+            .map { (pageIndex: Int) -> (Page) in return Page(index: pageIndex, perPage: PER_PAGE) }
             .map { (page: Page) -> (DispatchWorkItem) in
                 let requestWorkItem = DispatchWorkItem { [weak self] in
                     group.enter()
@@ -36,7 +36,7 @@ class GitRepoStore {
                                                            success: { (items) in
                                                             collection.append(contentsOf: items)
                                                             group.leave()
-                                                            
+
                     }, failure: { (error) in
                         failure(error)
                     })
@@ -46,9 +46,7 @@ class GitRepoStore {
         }
         
         for item in self.workItems {
-            if (item.isCancelled) {
-                break
-            }
+            if item.isCancelled { break }
             DispatchQueue.global().async(group: group, execute:  item)
         }
         
@@ -63,22 +61,15 @@ class GitRepoStore {
     
     func cancelSearch() -> Void {
         self.gitRepoService.cancel()
-        self.workItems.forEach { ($0.cancel()) }
+        self.workItems.forEach { $0.cancel() }
     }
     
     func saveItems(items: [GitRepo]) {
-        let placesData = NSKeyedArchiver.archivedData(withRootObject: items)
-        UserDefaults.standard.set(placesData, forKey: REPO_ITEMS)
+        storage.gitItems = items
     }
     
     func loadItems() -> [GitRepo]? {
-        guard let placesData = UserDefaults.standard.object(forKey: REPO_ITEMS) as? NSData,
-            let placesArray = NSKeyedUnarchiver.unarchiveObject(with: placesData as Data) as? [GitRepo]
-            else {
-                return nil
-        }
-        
-        return placesArray
+        return storage.gitItems
     }
     
     func clearStore() -> Void {

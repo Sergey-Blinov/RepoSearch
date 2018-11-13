@@ -24,10 +24,10 @@ enum CoderKey {
 
 class GitRepo: NSObject, NSCoding {
     
-    var name: String!
-    var urlString: String!
-    var devLanguage: String!
-    var starsValue: Int!
+    var name: String
+    var urlString: String
+    var devLanguage: String
+    var starsValue: Int
     
     init?( _ object: [String: Any]?) {
         guard

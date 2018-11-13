@@ -25,7 +25,7 @@ class GitRepoService: GitRepoServiceProtocol {
     private var tasks = [URLSessionDataTask?]()
 
     var provider: NetworkProvider {
-        return RequestsManager.shared
+        return RequestsProvider.shared
     }
     
     func getRepoItems(page: Page,
@@ -57,8 +57,7 @@ class GitRepoService: GitRepoServiceProtocol {
 }
 
 private extension GitRepoService {
-    
-    private func urlStringWith( _ page: Page, query: String) -> String? {
+    func urlStringWith( _ page: Page, query: String) -> String? {
         var parameters: [String : String] {
             return [GitRepoConstants.searchQuery : query,
                     GitRepoConstants.page : "\(page.index)",
