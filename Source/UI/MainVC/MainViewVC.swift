@@ -35,9 +35,9 @@ class MainVC: UIViewController {
             let urlString = self.selectedItemUrlString {
             controller.stringUrl = urlString
             segue.destination.popoverPresentationController?.delegate = self
-            popoverPresentationController.permittedArrowDirections = UIPopoverArrowDirection(rawValue: 0)
-            popoverPresentationController.sourceView = self.tableView
-            popoverPresentationController.sourceView?.center = self.view.center
+            popoverPresentationController.permittedArrowDirections = UIPopoverArrowDirection()
+            popoverPresentationController.sourceView = self.view
+            popoverPresentationController.sourceRect = CGRect(origin: self.view.center, size: CGSize.zero)
         }
     }
 }
