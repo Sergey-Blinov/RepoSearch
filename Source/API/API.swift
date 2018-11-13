@@ -13,7 +13,9 @@ struct API {
 }
 
 protocol GitRepoServiceProtocol: class {
-    
+
+    var provider: NetworkProvider { get }
+
     func getRepoItems(page: Page,
                       query: String,
                       success: @escaping (_ response: [GitRepo]) -> Void,

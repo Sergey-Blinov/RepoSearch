@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct GitRepoConstants {
+enum GitRepoConstants {
     static let baseURL  = "https://api.github.com/search/repositories?"
     static let searchQuery = "q"
     static let order = "order"
@@ -23,48 +23,42 @@ struct GitRepoConstants {
 class GitRepoService: GitRepoServiceProtocol {
     
     private var tasks = [URLSessionDataTask?]()
+
+    var provider: NetworkProvider {
+        return RequestsManager.shared
+    }
     
     func getRepoItems(page: Page,
                       query: String,
                       success: @escaping (_ response: [GitRepo]) -> Void,
                       failure: @escaping (_ error: Error?) -> Void ) -> Void {
         guard let urlString =  self.urlStringWith(page, query: query) else { return }
-        self.tasks.append(RequestsManager.sharedInstance().withURL(urlString: urlString,
-                                                                   body: nil,
-                                                                   head: nil,
-                                                                   method: RequestMethod.Get,
-                                                                   success: { (object) in
-                                                                    if let dictionary = object as? [String : AnyObject],
-                                                                        let array = dictionary[GitRepoConstants.items] as? [[String : AnyObject]] {
-                                                                        var items = [GitRepo]()
-                                                                        let closure: ([String: Any]) -> GitRepo?
-                                                                        closure = { dictionary in return GitRepo(dictionary) }
-                                                                        items = array.compactMap(closure)
-                                                                        
-                                                                        DispatchQueue.main.async {
-                                                                            success(items)
-                                                                        }
-                                                                        
-                                                                    } else {
-                                                                        failure(nil)
-                                                                    }
-        }) { (error) in
-            failure(error)
-        })
+        let task = provider.withURL(urlString: urlString,
+                                    body: nil,
+                                    head: nil,
+                                    method: .get,
+                                    success: { object in
+                                        guard let dictionary = object as? [String : AnyObject],
+                                            let array = dictionary[GitRepoConstants.items] as? [[String : AnyObject]] else {
+                                                failure(nil)
+                                                return
+                                        }
+
+                                        let items = array.compactMap { dictionary in return GitRepo(dictionary) }
+                                        DispatchQueue.main.async { success(items) }
+        },
+                                    failure: failure)
+        self.tasks.append(task)
     }
-    
+
     func cancel() {
-        self.tasks.forEach { (task) in
-            guard let task = task else { return }
-            task.cancel()
-        }
+        self.tasks.forEach { $0?.cancel() }
     }
 }
 
 private extension GitRepoService {
     
     private func urlStringWith( _ page: Page, query: String) -> String? {
-        
         var parameters: [String : String] {
             return [GitRepoConstants.searchQuery : query,
                     GitRepoConstants.page : "\(page.index)",
@@ -74,8 +68,7 @@ private extension GitRepoService {
         }
         
         guard var urlComponents = URLComponents(string: GitRepoConstants.baseURL) else { return "" }
-        urlComponents.queryItems = parameters
-            .map { URLQueryItem(name: $0.key, value: $0.value) }
+        urlComponents.queryItems = parameters.map { URLQueryItem(name: $0.key, value: $0.value) }
         
         return urlComponents.url?.absoluteString
     }

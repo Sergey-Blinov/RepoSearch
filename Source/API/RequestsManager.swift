@@ -9,36 +9,36 @@
 import Foundation
 
 enum RequestMethod: String {
-    case Post = "POST"
-    case Get  = "GET"
-    case Put  = "PUT"
+    case post = "POST"
+    case get  = "GET"
+    case put  = "PUT"
 }
 
-class RequestsManager: NSObject, URLSessionDelegate {
-    
-    var session = URLSession();
-    var configuration = URLSessionConfiguration();
+protocol NetworkProvider {
+    func withURL(urlString: String,
+                 body: [String : AnyObject]?,
+                 head: [String : AnyObject]?,
+                 method: RequestMethod,
+                 success: @escaping (_ response: AnyObject?) -> Void,
+                 failure: @escaping (_ error: Error?) -> Void ) -> URLSessionDataTask?
+}
 
-    private static let _sharedInstance = RequestsManager()
-    
-    class func sharedInstance() -> RequestsManager {
-        return _sharedInstance
-    }
+class RequestsManager: NSObject, URLSessionDelegate, NetworkProvider {
 
-    override init() {
-        super.init()
-        self.configuration = URLSessionConfiguration.default
-        self.session = URLSession.init(configuration: self.configuration,
-                                       delegate: nil,
-                                       delegateQueue: nil)
+    static let shared = RequestsManager()
+
+    var session: URLSession
+
+    init(session: URLSession = URLSession(configuration: URLSessionConfiguration.default)) {
+        self.session = session
     }
     
-    public func withURL(urlString: String,
-                        body: [String : AnyObject]?,
-                        head: [String : AnyObject]?,
-                        method: RequestMethod,
-                        success: @escaping (_ response: AnyObject?) -> Void,
-                        failure: @escaping (_ error: Error?) -> Void ) -> URLSessionDataTask? {
+    func withURL(urlString: String,
+                 body: [String : AnyObject]?,
+                 head: [String : AnyObject]?,
+                 method: RequestMethod,
+                 success: @escaping (_ response: AnyObject?) -> Void,
+                 failure: @escaping (_ error: Error?) -> Void ) -> URLSessionDataTask? {
         
         if let url = NSURL(string: urlString) {
             var  request = URLRequest(url: url as URL)
