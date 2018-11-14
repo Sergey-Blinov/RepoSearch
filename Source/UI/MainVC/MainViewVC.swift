@@ -9,7 +9,11 @@ import UIKit
 
 class MainVC: UIViewController {
     
-    @IBOutlet var tableView: UITableView!
+    @IBOutlet var tableView: UITableView! {
+        didSet {
+            tableView.register(RepoTableViewCell.self)
+        }
+    }
     
     var activityIndicatorView: UIActivityIndicatorView!
     var searchController: UISearchController!
@@ -57,7 +61,8 @@ extension MainVC: GitRepoLoadingDelegate {
             message = error.localizedDescription
         }
         
-        self.presentAlert(title: ERROR, message: message, okHandler: nil, cancelHandler: nil)
+        let errorPresenter = ErrorPresenter.init(title: ERROR, message: message)
+        errorPresenter.present(in: self)
     }
     
     func didSelect(_ item: GitRepo) {

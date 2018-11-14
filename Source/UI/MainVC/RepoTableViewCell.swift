@@ -8,7 +8,7 @@
 
 import UIKit
 
-class RepoTableViewCell: UITableViewCell {
+class RepoTableViewCell: UITableViewCell, NibReusable {
     @IBOutlet var titleLabel: UILabel!
     @IBOutlet var languageLabel: UILabel!
     @IBOutlet var starsCountLabel: UILabel!

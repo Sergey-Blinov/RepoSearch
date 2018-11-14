@@ -14,7 +14,10 @@
 		A5066ADE20CC83780005D631 /* GitRepoCellModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5066ADD20CC83780005D631 /* GitRepoCellModel.swift */; };
 		A5066AE120CC89650005D631 /* GitRepoStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5066AE020CC89650005D631 /* GitRepoStore.swift */; };
 		A5066AE320CD49170005D631 /* Page.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5066AE220CD49170005D631 /* Page.swift */; };
-		A5066AE520CD68240005D631 /* UIViewController+Alerts.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5066AE420CD68240005D631 /* UIViewController+Alerts.swift */; };
+		A5577D06219CCEA900E273ED /* UIView+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5577D05219CCEA900E273ED /* UIView+Extensions.swift */; };
+		A5577D08219CCEB300E273ED /* UITableView+Reusable.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5577D07219CCEB300E273ED /* UITableView+Reusable.swift */; };
+		A5577D0A219CCEF600E273ED /* ErrorPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5577D09219CCEF500E273ED /* ErrorPresenter.swift */; };
+		A5577D0C219CCF6D00E273ED /* RepoTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = A5577D0B219CCF6D00E273ED /* RepoTableViewCell.xib */; };
 		A55B496F20CBEDE30015F0AC /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A55B496D20CBEDE30015F0AC /* Main.storyboard */; };
 		A55B497120CBF8700015F0AC /* NSObject+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = A55B497020CBF8700015F0AC /* NSObject+Extensions.swift */; };
 		A589F3DD1ED0915100ACE8FD /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A589F3DC1ED0915100ACE8FD /* AppDelegate.swift */; };
@@ -37,7 +40,10 @@
 		A5066ADD20CC83780005D631 /* GitRepoCellModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GitRepoCellModel.swift; sourceTree = "<group>"; };
 		A5066AE020CC89650005D631 /* GitRepoStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GitRepoStore.swift; sourceTree = "<group>"; };
 		A5066AE220CD49170005D631 /* Page.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Page.swift; sourceTree = "<group>"; };
-		A5066AE420CD68240005D631 /* UIViewController+Alerts.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIViewController+Alerts.swift"; sourceTree = "<group>"; };
+		A5577D05219CCEA900E273ED /* UIView+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIView+Extensions.swift"; sourceTree = "<group>"; };
+		A5577D07219CCEB300E273ED /* UITableView+Reusable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UITableView+Reusable.swift"; sourceTree = "<group>"; };
+		A5577D09219CCEF500E273ED /* ErrorPresenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ErrorPresenter.swift; sourceTree = "<group>"; };
+		A5577D0B219CCF6D00E273ED /* RepoTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = RepoTableViewCell.xib; sourceTree = "<group>"; };
 		A55B496E20CBEDE30015F0AC /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		A55B497020CBF8700015F0AC /* NSObject+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSObject+Extensions.swift"; sourceTree = "<group>"; };
 		A589F3941ECCBE4D00ACE8FD /* RepoSearch.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RepoSearch.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -71,6 +77,7 @@
 				A5066AD920CC7C900005D631 /* MainViewVC.swift */,
 				A5A18890200E0D84002FD583 /* RepoListDataSource.swift */,
 				A5066AD820CC7C900005D631 /* RepoTableViewCell.swift */,
+				A5577D0B219CCF6D00E273ED /* RepoTableViewCell.xib */,
 			);
 			path = MainVC;
 			sourceTree = "<group>";
@@ -122,6 +129,7 @@
 		A589F3F01ED091B500ACE8FD /* Source */ = {
 			isa = PBXGroup;
 			children = (
+				A5577D09219CCEF500E273ED /* ErrorPresenter.swift */,
 				A643A051219B08C800946BF7 /* LocalStorage.swift */,
 				A5066AD520CC16200005D631 /* Constants.swift */,
 				A58C7DD020CB1CE10058D29B /* Extensions */,
@@ -156,7 +164,8 @@
 		A58C7DD020CB1CE10058D29B /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
-				A5066AE420CD68240005D631 /* UIViewController+Alerts.swift */,
+				A5577D07219CCEB300E273ED /* UITableView+Reusable.swift */,
+				A5577D05219CCEA900E273ED /* UIView+Extensions.swift */,
 				A55B497020CBF8700015F0AC /* NSObject+Extensions.swift */,
 				A5066AD320CC15720005D631 /* String+Trim.swift */,
 			);
@@ -245,6 +254,7 @@
 				A55B496F20CBEDE30015F0AC /* Main.storyboard in Resources */,
 				A589F3ED1ED0917300ACE8FD /* Assets.xcassets in Resources */,
 				A589F3EE1ED0917300ACE8FD /* LaunchScreen.storyboard in Resources */,
+				A5577D0C219CCF6D00E273ED /* RepoTableViewCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -259,14 +269,16 @@
 				A589F3F91ED091B500ACE8FD /* RepoWebViewVC.swift in Sources */,
 				A5066AD420CC15720005D631 /* String+Trim.swift in Sources */,
 				A5DD6AA61ED8BE6F0099727A /* GitRepo.swift in Sources */,
+				A5577D08219CCEB300E273ED /* UITableView+Reusable.swift in Sources */,
 				A589F3DD1ED0915100ACE8FD /* AppDelegate.swift in Sources */,
 				A5066ADA20CC7C900005D631 /* RepoTableViewCell.swift in Sources */,
+				A5577D06219CCEA900E273ED /* UIView+Extensions.swift in Sources */,
 				A5066AE120CC89650005D631 /* GitRepoStore.swift in Sources */,
 				A55B497120CBF8700015F0AC /* NSObject+Extensions.swift in Sources */,
+				A5577D0A219CCEF600E273ED /* ErrorPresenter.swift in Sources */,
 				A5066AD620CC16200005D631 /* Constants.swift in Sources */,
 				A589F3F71ED091B500ACE8FD /* RequestsProvider.swift in Sources */,
 				A5EE7E2A1FF262FA007A00A7 /* GitRepoService.swift in Sources */,
-				A5066AE520CD68240005D631 /* UIViewController+Alerts.swift in Sources */,
 				A643A052219B08C800946BF7 /* LocalStorage.swift in Sources */,
 				A5066ADE20CC83780005D631 /* GitRepoCellModel.swift in Sources */,
 				A5C7D35F20C9D920007D95D0 /* API.swift in Sources */,
