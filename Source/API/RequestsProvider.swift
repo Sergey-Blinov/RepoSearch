@@ -8,19 +8,13 @@
 
 import Foundation
 
-enum RequestMethod: String {
-    case post = "POST"
-    case get  = "GET"
-    case put  = "PUT"
-}
-
 protocol NetworkProvider {
     typealias NetworkProviderCompletionHandler = (Any?, Error?) -> Void
 
     func withURL(urlString: String,
                  body: [String : AnyObject]?,
                  head: [String : AnyObject]?,
-                 method: RequestMethod,
+                 method: HTTPMethod,
                  completionHandler: @escaping NetworkProviderCompletionHandler) -> URLSessionDataTask?
 }
 
@@ -37,7 +31,7 @@ class RequestsProvider: NSObject, URLSessionDelegate, NetworkProvider {
     func withURL(urlString: String,
                  body: [String : AnyObject]?,
                  head: [String : AnyObject]?,
-                 method: RequestMethod,
+                 method: HTTPMethod,
                  completionHandler: @escaping NetworkProviderCompletionHandler) -> URLSessionDataTask? {
 
         guard let url = URL(string: urlString) else {

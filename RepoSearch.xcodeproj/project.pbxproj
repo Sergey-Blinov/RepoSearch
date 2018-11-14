@@ -14,6 +14,7 @@
 		A5066ADE20CC83780005D631 /* GitRepoCellModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5066ADD20CC83780005D631 /* GitRepoCellModel.swift */; };
 		A5066AE120CC89650005D631 /* GitRepoStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5066AE020CC89650005D631 /* GitRepoStore.swift */; };
 		A5066AE320CD49170005D631 /* Page.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5066AE220CD49170005D631 /* Page.swift */; };
+		A530305B219CD77300044874 /* HTTPMethod.swift in Sources */ = {isa = PBXBuildFile; fileRef = A530305A219CD77300044874 /* HTTPMethod.swift */; };
 		A5577D06219CCEA900E273ED /* UIView+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5577D05219CCEA900E273ED /* UIView+Extensions.swift */; };
 		A5577D08219CCEB300E273ED /* UITableView+Reusable.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5577D07219CCEB300E273ED /* UITableView+Reusable.swift */; };
 		A5577D0A219CCEF600E273ED /* ErrorPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5577D09219CCEF500E273ED /* ErrorPresenter.swift */; };
@@ -40,6 +41,7 @@
 		A5066ADD20CC83780005D631 /* GitRepoCellModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GitRepoCellModel.swift; sourceTree = "<group>"; };
 		A5066AE020CC89650005D631 /* GitRepoStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GitRepoStore.swift; sourceTree = "<group>"; };
 		A5066AE220CD49170005D631 /* Page.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Page.swift; sourceTree = "<group>"; };
+		A530305A219CD77300044874 /* HTTPMethod.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTTPMethod.swift; sourceTree = "<group>"; };
 		A5577D05219CCEA900E273ED /* UIView+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIView+Extensions.swift"; sourceTree = "<group>"; };
 		A5577D07219CCEB300E273ED /* UITableView+Reusable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UITableView+Reusable.swift"; sourceTree = "<group>"; };
 		A5577D09219CCEF500E273ED /* ErrorPresenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ErrorPresenter.swift; sourceTree = "<group>"; };
@@ -144,6 +146,7 @@
 		A589F3F11ED091B500ACE8FD /* API */ = {
 			isa = PBXGroup;
 			children = (
+				A530305A219CD77300044874 /* HTTPMethod.swift */,
 				A5C7D35E20C9D920007D95D0 /* API.swift */,
 				A5EE7E291FF262FA007A00A7 /* GitRepoService.swift */,
 				A589F3F21ED091B500ACE8FD /* RequestsProvider.swift */,
@@ -273,6 +276,7 @@
 				A589F3DD1ED0915100ACE8FD /* AppDelegate.swift in Sources */,
 				A5066ADA20CC7C900005D631 /* RepoTableViewCell.swift in Sources */,
 				A5577D06219CCEA900E273ED /* UIView+Extensions.swift in Sources */,
+				A530305B219CD77300044874 /* HTTPMethod.swift in Sources */,
 				A5066AE120CC89650005D631 /* GitRepoStore.swift in Sources */,
 				A55B497120CBF8700015F0AC /* NSObject+Extensions.swift in Sources */,
 				A5577D0A219CCEF600E273ED /* ErrorPresenter.swift in Sources */,
