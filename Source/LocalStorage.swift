@@ -34,7 +34,7 @@ class LocalStorage {
             return placesArray
         }
         set {
-            let placesData = NSKeyedArchiver.archivedData(withRootObject: gitItems as Any)
+            let placesData = NSKeyedArchiver.archivedData(withRootObject: newValue as Any)
             keyValueStore.set(placesData, forKey: REPO_ITEMS)
         }
     }

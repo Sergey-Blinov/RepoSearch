@@ -21,7 +21,7 @@ enum GitRepoConstants {
 }
 
 class GitRepoService: GitRepoServiceProtocol {
-    
+
     private var tasks = [URLSessionDataTask?]()
 
     var provider: NetworkProvider {
@@ -30,24 +30,17 @@ class GitRepoService: GitRepoServiceProtocol {
     
     func getRepoItems(page: Page,
                       query: String,
-                      success: @escaping (_ response: [GitRepo]) -> Void,
-                      failure: @escaping (_ error: Error?) -> Void ) -> Void {
+                      completionHandler: @escaping GitRepoServiceCompletionHandler) {
         guard let urlString =  self.urlStringWith(page, query: query) else { return }
-        self.tasks.append(provider.withURL(urlString: urlString,
-                                           body: nil,
-                                           head: nil,
-                                           method: .get,
-                                           success: { object in
-                                            guard let dictionary = object as? [String : AnyObject],
-                                                let array = dictionary[GitRepoConstants.items] as? [[String : AnyObject]] else {
-                                                    failure(nil)
-                                                    return
-                                            }
-                                            
-                                            let items = array.compactMap { dictionary in return GitRepo(dictionary) }
-                                            DispatchQueue.main.async { success(items) }
-        },
-                                           failure: failure))
+        self.tasks.append(provider.withURL(urlString: urlString, body: nil, head: nil, method: .get) { object, error in
+            guard let dictionary = object as? [String : AnyObject],
+                let array = dictionary[GitRepoConstants.items] as? [[String : AnyObject]] else {
+                    completionHandler(nil,error)
+                    return
+            }
+            let items = array.compactMap { dictionary in return GitRepo(dictionary) }
+            DispatchQueue.main.async { completionHandler(items , error) }
+        })
     }
     
     func cancel() {

@@ -35,21 +35,21 @@ class GitRepoStore: Store {
                     group.enter()
                     guard let strongSelf = self else { return }
                     strongSelf.gitRepoService.getRepoItems(page: page,
-                                                           query: query,
-                                                           success: { items in
+                                                           query: query) { items, error in
                                                             group.leave()
-                                                            collection.append(contentsOf: items)
-                                                            
-                    }, failure: failure)
+                                                            guard let gItems = items else {
+                                                                failure(error)
+                                                                return
+                                                            }
+                                                            collection.append(contentsOf: gItems)
+                    }
                 }
-                
+
                 return requestWorkItem
         }
 
-        for item in self.workItems {
-            if !item.isCancelled { item.perform() }
-        }
-        
+        self.workItems.forEach { if !$0.isCancelled { $0.perform() }}
+
         group.notify(queue: .main) { [weak self] in
             let items = collection.sorted { $0.starsValue > $1.starsValue }
             guard let strongSelf = self else { return }

@@ -49,7 +49,7 @@ class GitRepo: NSObject, NSCoding {
     required init?(coder aDecoder: NSCoder) {
         self.name = aDecoder.decodeObject(forKey: CoderKey.name) as! String
         self.urlString  = aDecoder.decodeObject(forKey: CoderKey.urlString) as! String
-        self.starsValue = aDecoder.decodeObject(forKey: CoderKey.starsValue) as! Int
+        self.starsValue = aDecoder.decodeInteger(forKey: CoderKey.starsValue)
         self.devLanguage = aDecoder.decodeObject(forKey: CoderKey.devLanguage) as! String
     }
     

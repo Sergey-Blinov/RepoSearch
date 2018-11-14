@@ -15,19 +15,20 @@ enum RequestMethod: String {
 }
 
 protocol NetworkProvider {
+    typealias NetworkProviderCompletionHandler = (Any?, Error?) -> Void
+
     func withURL(urlString: String,
                  body: [String : AnyObject]?,
                  head: [String : AnyObject]?,
                  method: RequestMethod,
-                 success: @escaping (_ response: AnyObject?) -> Void,
-                 failure: @escaping (_ error: Error?) -> Void ) -> URLSessionDataTask?
+                 completionHandler: @escaping NetworkProviderCompletionHandler) -> URLSessionDataTask?
 }
 
 class RequestsProvider: NSObject, URLSessionDelegate, NetworkProvider {
 
     static let shared = RequestsProvider()
 
-    var session: URLSession
+    private var session: URLSession
 
     init(session: URLSession = URLSession(configuration: URLSessionConfiguration.default)) {
         self.session = session
@@ -37,53 +38,53 @@ class RequestsProvider: NSObject, URLSessionDelegate, NetworkProvider {
                  body: [String : AnyObject]?,
                  head: [String : AnyObject]?,
                  method: RequestMethod,
-                 success: @escaping (_ response: AnyObject?) -> Void,
-                 failure: @escaping (_ error: Error?) -> Void ) -> URLSessionDataTask? {
-        
-        if let url = NSURL(string: urlString) {
-            var  request = URLRequest(url: url as URL)
-            request.timeoutInterval = 30
-            request.setValue("application/json", forHTTPHeaderField: "Content-Type")
-            
-            if  let bodyObject = body,
-                let data = try? JSONSerialization.data(withJSONObject: bodyObject as Any, options: .prettyPrinted),
-                let httPBodyString = String(data: data, encoding: String.Encoding.utf8) {
-                request.httpBody = httPBodyString.data(using: .utf8)!
-            }
+                 completionHandler: @escaping NetworkProviderCompletionHandler) -> URLSessionDataTask? {
 
-            let task = session.dataTask(with: request, completionHandler: { dataObject, response, error in
-                
-                if ((error) != nil) {
-                    print(error?.localizedDescription as Any)
-                    failure(error)
-                }
-                
-                if ((dataObject) != nil) {
-                    do {
-                        if let jsonObject = try JSONSerialization.jsonObject(with: dataObject!, options: []) as? [String: AnyObject] {
-                            print(jsonObject)
-                            success(jsonObject as AnyObject?)
-                        }
-                        
-                    } catch {
-                        print(error.localizedDescription)
-                        failure(error)
-                    }
-                }
-            })
-            
-            task.resume()
-            
-            return task
-            
-        }else {
+        guard let url = URL(string: urlString) else {
             let error = NSError.init(domain: "Incorrect url", code: 0, userInfo: nil)
             print(error.localizedDescription)
-            
-            failure(error)
+            completionHandler(nil, error)
+            return nil
         }
-        
-        return nil
+
+        var request = URLRequest(url: url)
+        request.timeoutInterval = 30
+        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        request.cachePolicy = .reloadIgnoringLocalCacheData
+
+        if let bodyObject = body,
+            let data = try? JSONSerialization.data(withJSONObject: bodyObject as Any, options: .prettyPrinted),
+            let httPBodyString = String(data: data, encoding: String.Encoding.utf8) {
+            request.httpBody = httPBodyString.data(using: .utf8)!
+        }
+
+        let task = session.dataTask(with: request) { dataObject, response, error in
+            guard error == nil else {
+                print(error?.localizedDescription ?? "Error load data")
+                completionHandler(nil, error)
+                return
+            }
+
+            guard let data = dataObject else {
+                print("Error load data")
+                completionHandler(nil, error)
+                return
+            }
+
+            do {
+                let jsonObject = try JSONSerialization.jsonObject(with: data, options: [])
+                print(jsonObject)
+                completionHandler(jsonObject, error)
+            } catch {
+                print("Error JSONSerialization")
+                completionHandler(nil, error)
+            }
+        }
+
+        task.resume()
+
+        return task
     }
-    
+
 }
+

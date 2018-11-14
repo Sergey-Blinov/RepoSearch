@@ -13,14 +13,11 @@ enum API {
 }
 
 protocol GitRepoServiceProtocol: class {
+    typealias GitRepoServiceCompletionHandler = ([GitRepo]?, Error?) -> Void
 
     var provider: NetworkProvider { get }
 
-    func getRepoItems(page: Page,
-                      query: String,
-                      success: @escaping (_ response: [GitRepo]) -> Void,
-                      failure: @escaping (_ error: Error?) -> Void ) -> Void
+    func getRepoItems(page: Page, query: String, completionHandler: @escaping GitRepoServiceCompletionHandler)
     
-    func cancel() -> Void
-    
+    func cancel()
 }
