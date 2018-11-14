@@ -30,14 +30,15 @@ class GitRepoStore: Store {
         self.workItems = Array(1...PAGE_COUNT)
             .map { (pageIndex: Int) -> (Page) in return Page(index: pageIndex, perPage: PER_PAGE) }
             .map { (page: Page) -> (DispatchWorkItem) in
-                let requestWorkItem = DispatchWorkItem { [weak self] in
+
+                let requestWorkItem = DispatchWorkItem(qos: .background) { [weak self] in
                     group.enter()
                     guard let strongSelf = self else { return }
                     strongSelf.gitRepoService.getRepoItems(page: page,
                                                            query: query,
                                                            success: { items in
-                                                            collection.append(contentsOf: items)
                                                             group.leave()
+                                                            collection.append(contentsOf: items)
                                                             
                     }, failure: failure)
                 }
@@ -46,8 +47,7 @@ class GitRepoStore: Store {
         }
 
         for item in self.workItems {
-            if item.isCancelled { break }
-            DispatchQueue.global().async(group: group, execute:  item)
+            if !item.isCancelled { item.perform() }
         }
         
         group.notify(queue: .main) { [weak self] in

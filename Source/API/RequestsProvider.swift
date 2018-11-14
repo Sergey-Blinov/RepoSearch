@@ -51,7 +51,7 @@ class RequestsProvider: NSObject, URLSessionDelegate, NetworkProvider {
                 request.httpBody = httPBodyString.data(using: .utf8)!
             }
 
-            let task = session.dataTask(with: request, completionHandler: {(dataObject, response, error) in
+            let task = session.dataTask(with: request, completionHandler: { dataObject, response, error in
                 
                 if ((error) != nil) {
                     print(error?.localizedDescription as Any)
