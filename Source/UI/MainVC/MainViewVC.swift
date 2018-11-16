@@ -121,7 +121,7 @@ private extension MainVC {
     }
     
     func presenSelectedItem(_ item: GitRepo) -> Void {
-        self.selectedItemUrlString = item.urlString
+        self.selectedItemUrlString = item.url
         self.performSegue(withIdentifier:RepoWebViewVC.className, sender: self)
     }
 }

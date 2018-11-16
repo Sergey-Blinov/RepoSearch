@@ -16,9 +16,9 @@ struct GitRepoCellModel {
     let stars: String
     
     init(_ repoItem: GitRepo) {
-        self.name = repoItem.name
-        self.stringURL = repoItem.urlString
-        self.stars = String(repoItem.starsValue)
-        self.devLanguage = repoItem.devLanguage
+        self.name = repoItem.name ?? ""
+        self.stringURL = repoItem.url ?? ""
+        self.stars = String(repoItem.starsCount ?? 0)
+        self.devLanguage = repoItem.devLanguage ?? ""
     }
 }

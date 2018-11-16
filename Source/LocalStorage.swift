@@ -18,29 +18,43 @@ extension UserDefaults : KeyValueStore {}
 
 class LocalStorage {
     static let shared = LocalStorage()
-
+    
     let keyValueStore : KeyValueStore
-
+    
     init(keyValueStore: KeyValueStore = UserDefaults.standard) {
         self.keyValueStore = keyValueStore
     }
     
     var gitItems: [GitRepo]? {
         get {
-            guard let placesData = keyValueStore.object(forKey: REPO_ITEMS) as? Data,
-                let placesArray = NSKeyedUnarchiver.unarchiveObject(with: placesData) as? [GitRepo]
-                else { return nil }
-            
-            return placesArray
+            guard let data = NSKeyedUnarchiver.unarchiveObject(withFile: filePath) as? Data else { return nil }
+            do {
+                let products = try PropertyListDecoder().decode([GitRepo].self, from: data)
+                return products
+            } catch {
+                print("Retrieve Failed")
+                return nil
+            }
         }
         set {
-            let placesData = NSKeyedArchiver.archivedData(withRootObject: newValue as Any)
-            keyValueStore.set(placesData, forKey: REPO_ITEMS)
+            do {
+                let data = try PropertyListEncoder().encode(newValue)
+                let success = NSKeyedArchiver.archiveRootObject(data, toFile: filePath)
+                print(success ? "Successful save" : "Save Failed")
+            } catch {
+                print("Save Failed")
+            }
         }
     }
-
+    
     func clearItems() {
-        keyValueStore.removeObject(forKey: REPO_ITEMS)
+        try? FileManager.default.removeItem(atPath: filePath)
     }
-
+    
+    var filePath: String {
+        let manager = FileManager.default
+        let url = manager.urls(for: .documentDirectory, in: .userDomainMask).first
+        return (url!.appendingPathComponent(REPO_ITEMS).path)
+    }
+    
 }

@@ -30,16 +30,21 @@ class GitRepoService: GitRepoServiceProtocol {
     
     func getRepoItems(page: Page,
                       query: String,
-                      completionHandler: @escaping GitRepoServiceCompletionHandler) {
-        guard let urlString =  self.urlStringWith(page, query: query) else { return }
-        self.tasks.append(provider.withURL(urlString: urlString, body: nil, head: nil, method: .get) { object, error in
-            guard let dictionary = object as? [String : AnyObject],
-                let array = dictionary[GitRepoConstants.items] as? [[String : AnyObject]] else {
-                    completionHandler(nil,error)
-                    return
+                      completionHandler: @escaping GitRepoServiceCompletionHandler<GitRepo>) {
+        guard let urlString = self.urlStringWith(page, query: query) else { return }
+         self.tasks.append(provider.withURL(urlString: urlString, body: nil, head: nil, method: .get) { result in
+            switch result {
+            case .success(let data):
+                do {
+                    let items = try JSONDecoder().decode(GitRepoDataModel.self, from: data).items
+                    DispatchQueue.main.async { completionHandler(.success(items)) }
+                } catch {
+                    
+                }
+          
+            case .failure(let error):
+                DispatchQueue.main.async { completionHandler(.failure(error)) }
             }
-            let items = array.compactMap { dictionary in return GitRepo(dictionary) }
-            DispatchQueue.main.async { completionHandler(items , error) }
         })
     }
     

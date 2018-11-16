@@ -30,28 +30,31 @@ class GitRepoStore: Store {
         self.workItems = Array(1...PAGE_COUNT)
             .map { (pageIndex: Int) -> (Page) in return Page(index: pageIndex, perPage: PER_PAGE) }
             .map { (page: Page) -> (DispatchWorkItem) in
-
+                
                 let requestWorkItem = DispatchWorkItem(qos: .background) { [weak self] in
                     group.enter()
                     guard let strongSelf = self else { return }
                     strongSelf.gitRepoService.getRepoItems(page: page,
-                                                           query: query) { items, error in
+                                                           query: query) { result in
                                                             group.leave()
-                                                            guard let gItems = items else {
-                                                                failure(error)
-                                                                return
+                                                            switch result {
+                                                            case .success(let items):
+                                                                collection.append(contentsOf: items)
+                                                                
+                                                            case .failure(let error):
+                                                                break
+                                                                
                                                             }
-                                                            collection.append(contentsOf: gItems)
                     }
                 }
-
+                
                 return requestWorkItem
         }
 
         self.workItems.forEach { if !$0.isCancelled { $0.perform() }}
 
         group.notify(queue: .main) { [weak self] in
-            let items = collection.sorted { $0.starsValue > $1.starsValue }
+            let items = collection.sorted { $0.starsCount! > $1.starsCount! }
             guard let strongSelf = self else { return }
             strongSelf.clearItems()
             strongSelf.saveItems(items: items)
