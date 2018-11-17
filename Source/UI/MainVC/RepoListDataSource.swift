@@ -18,18 +18,17 @@ class GitRepoListDataSource: NSObject {
     weak var tableView: UITableView?
     
     private var gitRepoStore: GitRepoStore!
-    var didSelect: ((GitRepo) -> Void)?
+    var didSelect: ((GitRepoViewModel) -> Void)?
     var items: [GitRepo] = []
     
     weak var loadingDelegate: GitRepoLoadingDelegate?
     
     init(tableView: UITableView, loadingDelegate: GitRepoLoadingDelegate, store: GitRepoStore = GitRepoStore(service: API.gitRepoServise)) {
         super.init()
+        self.gitRepoStore = store
         self.tableView = tableView
         self.tableView?.dataSource = self
         self.tableView?.delegate = self
-        
-        self.gitRepoStore = store
         self.loadingDelegate = loadingDelegate
         guard let repoItems = self.gitRepoStore.loadItems() else { return }
         self.items = repoItems
@@ -55,10 +54,8 @@ class GitRepoListDataSource: NSObject {
                                         self?.loadingDelegate?.endLoadItems(nil)
                                         guard let strongSelf = self else { return }
                                         strongSelf.insert(items)
-        }) { (error) in
-            DispatchQueue.main.async {
-                self.loadingDelegate?.endLoadItems(nil)
-            }
+        }) { error in
+           self.loadingDelegate?.endLoadItems(nil)
         }
     }
 }
@@ -72,7 +69,7 @@ extension GitRepoListDataSource: UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: RepoTableViewCell.className) as! RepoTableViewCell
         let item = self.items[indexPath.row]
-        let cellModel = GitRepoCellModel.init(item)
+        let cellModel = GitRepoViewModel(item)
         cell.fillWith(cellModel)
         
         return cell
@@ -83,7 +80,7 @@ extension GitRepoListDataSource: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
-        let item = self.items[indexPath.row]
+        let item = GitRepoViewModel(self.items[indexPath.row])
         self.didSelect?(item)
     }
 }

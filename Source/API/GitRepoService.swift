@@ -41,7 +41,6 @@ class GitRepoService: GitRepoServiceProtocol {
                 } catch {
                     
                 }
-          
             case .failure(let error):
                 DispatchQueue.main.async { completionHandler(.failure(error)) }
             }

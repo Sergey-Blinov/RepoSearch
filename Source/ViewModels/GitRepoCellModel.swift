@@ -8,17 +8,26 @@
 
 import Foundation
 
-struct GitRepoCellModel {
-
-    let name: String
-    let stringURL: String
-    let devLanguage: String
-    let stars: String
+struct GitRepoViewModel {
+    let repoItem: GitRepo
+    
+    var name: String {
+        return repoItem.name ?? ""
+    }
+    
+    var stringURL: String {
+        return repoItem.url ?? ""
+    }
+    
+    var devLanguage: String {
+        return repoItem.devLanguage ?? ""
+    }
+    
+    var stars: String {
+        return String(repoItem.starsCount ?? 0)
+    }
     
     init(_ repoItem: GitRepo) {
-        self.name = repoItem.name ?? ""
-        self.stringURL = repoItem.url ?? ""
-        self.stars = String(repoItem.starsCount ?? 0)
-        self.devLanguage = repoItem.devLanguage ?? ""
+        self.repoItem = repoItem
     }
 }

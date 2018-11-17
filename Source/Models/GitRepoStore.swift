@@ -40,10 +40,8 @@ class GitRepoStore: Store {
                                                             switch result {
                                                             case .success(let items):
                                                                 collection.append(contentsOf: items)
-                                                                
-                                                            case .failure(let error):
+                                                            case .failure(_):
                                                                 break
-                                                                
                                                             }
                     }
                 }

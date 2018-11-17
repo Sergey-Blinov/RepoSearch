@@ -24,7 +24,7 @@ struct GitRepo: Codable {
         case url = "html_url"
         case starsCount = "stargazers_count"
     }
-
+    
     init(from decoder: Decoder) throws {
         let values = try decoder.container(keyedBy: CodingKeys.self)
         name = try? values.decode(String.self, forKey: .name)
