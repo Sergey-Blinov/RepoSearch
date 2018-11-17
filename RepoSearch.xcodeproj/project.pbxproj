@@ -14,7 +14,14 @@
 		A5066ADE20CC83780005D631 /* GitRepoCellModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5066ADD20CC83780005D631 /* GitRepoCellModel.swift */; };
 		A5066AE120CC89650005D631 /* GitRepoStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5066AE020CC89650005D631 /* GitRepoStore.swift */; };
 		A5066AE320CD49170005D631 /* Page.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5066AE220CD49170005D631 /* Page.swift */; };
-		A530305B219CD77300044874 /* HTTPMethod.swift in Sources */ = {isa = PBXBuildFile; fileRef = A530305A219CD77300044874 /* HTTPMethod.swift */; };
+		A542CFBE21A090BC00C866CC /* NetworkOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = A542CFB821A090BC00C866CC /* NetworkOperation.swift */; };
+		A542CFBF21A090BC00C866CC /* APIError.swift in Sources */ = {isa = PBXBuildFile; fileRef = A542CFB921A090BC00C866CC /* APIError.swift */; };
+		A542CFC021A090BC00C866CC /* APIClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = A542CFBA21A090BC00C866CC /* APIClient.swift */; };
+		A542CFC121A090BC00C866CC /* AsynchronousOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = A542CFBB21A090BC00C866CC /* AsynchronousOperation.swift */; };
+		A542CFC221A090BC00C866CC /* HTTPmethod.swift in Sources */ = {isa = PBXBuildFile; fileRef = A542CFBC21A090BC00C866CC /* HTTPmethod.swift */; };
+		A542CFC321A090BC00C866CC /* Endpoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = A542CFBD21A090BC00C866CC /* Endpoint.swift */; };
+		A542CFC521A0959200C866CC /* GetRepoEndpoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = A542CFC421A0959200C866CC /* GetRepoEndpoint.swift */; };
+		A542CFC721A0994800C866CC /* GitRepoAPIClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = A542CFC621A0994800C866CC /* GitRepoAPIClient.swift */; };
 		A5577D06219CCEA900E273ED /* UIView+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5577D05219CCEA900E273ED /* UIView+Extensions.swift */; };
 		A5577D08219CCEB300E273ED /* UITableView+Reusable.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5577D07219CCEB300E273ED /* UITableView+Reusable.swift */; };
 		A5577D0A219CCEF600E273ED /* ErrorPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5577D09219CCEF500E273ED /* ErrorPresenter.swift */; };
@@ -24,7 +31,6 @@
 		A589F3DD1ED0915100ACE8FD /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A589F3DC1ED0915100ACE8FD /* AppDelegate.swift */; };
 		A589F3ED1ED0917300ACE8FD /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A589F3E81ED0917300ACE8FD /* Assets.xcassets */; };
 		A589F3EE1ED0917300ACE8FD /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A589F3E91ED0917300ACE8FD /* LaunchScreen.storyboard */; };
-		A589F3F71ED091B500ACE8FD /* RequestsProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = A589F3F21ED091B500ACE8FD /* RequestsProvider.swift */; };
 		A589F3F91ED091B500ACE8FD /* RepoWebViewVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A589F3F51ED091B500ACE8FD /* RepoWebViewVC.swift */; };
 		A5A18891200E0D84002FD583 /* RepoListDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5A18890200E0D84002FD583 /* RepoListDataSource.swift */; };
 		A5C7D35F20C9D920007D95D0 /* API.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5C7D35E20C9D920007D95D0 /* API.swift */; };
@@ -41,7 +47,14 @@
 		A5066ADD20CC83780005D631 /* GitRepoCellModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GitRepoCellModel.swift; sourceTree = "<group>"; };
 		A5066AE020CC89650005D631 /* GitRepoStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GitRepoStore.swift; sourceTree = "<group>"; };
 		A5066AE220CD49170005D631 /* Page.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Page.swift; sourceTree = "<group>"; };
-		A530305A219CD77300044874 /* HTTPMethod.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTTPMethod.swift; sourceTree = "<group>"; };
+		A542CFB821A090BC00C866CC /* NetworkOperation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworkOperation.swift; sourceTree = "<group>"; };
+		A542CFB921A090BC00C866CC /* APIError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = APIError.swift; sourceTree = "<group>"; };
+		A542CFBA21A090BC00C866CC /* APIClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = APIClient.swift; sourceTree = "<group>"; };
+		A542CFBB21A090BC00C866CC /* AsynchronousOperation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AsynchronousOperation.swift; sourceTree = "<group>"; };
+		A542CFBC21A090BC00C866CC /* HTTPmethod.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HTTPmethod.swift; sourceTree = "<group>"; };
+		A542CFBD21A090BC00C866CC /* Endpoint.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Endpoint.swift; sourceTree = "<group>"; };
+		A542CFC421A0959200C866CC /* GetRepoEndpoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetRepoEndpoint.swift; sourceTree = "<group>"; };
+		A542CFC621A0994800C866CC /* GitRepoAPIClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GitRepoAPIClient.swift; sourceTree = "<group>"; };
 		A5577D05219CCEA900E273ED /* UIView+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIView+Extensions.swift"; sourceTree = "<group>"; };
 		A5577D07219CCEB300E273ED /* UITableView+Reusable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UITableView+Reusable.swift"; sourceTree = "<group>"; };
 		A5577D09219CCEF500E273ED /* ErrorPresenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ErrorPresenter.swift; sourceTree = "<group>"; };
@@ -53,7 +66,6 @@
 		A589F3DC1ED0915100ACE8FD /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		A589F3E81ED0917300ACE8FD /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		A589F3EA1ED0917300ACE8FD /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
-		A589F3F21ED091B500ACE8FD /* RequestsProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RequestsProvider.swift; sourceTree = "<group>"; };
 		A589F3F51ED091B500ACE8FD /* RepoWebViewVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RepoWebViewVC.swift; sourceTree = "<group>"; };
 		A5A18890200E0D84002FD583 /* RepoListDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RepoListDataSource.swift; sourceTree = "<group>"; };
 		A5C7D35E20C9D920007D95D0 /* API.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = API.swift; sourceTree = "<group>"; };
@@ -90,6 +102,19 @@
 				A5066ADD20CC83780005D631 /* GitRepoCellModel.swift */,
 			);
 			path = ViewModels;
+			sourceTree = "<group>";
+		};
+		A542CFB721A090BC00C866CC /* Generic API */ = {
+			isa = PBXGroup;
+			children = (
+				A542CFB821A090BC00C866CC /* NetworkOperation.swift */,
+				A542CFB921A090BC00C866CC /* APIError.swift */,
+				A542CFBA21A090BC00C866CC /* APIClient.swift */,
+				A542CFBB21A090BC00C866CC /* AsynchronousOperation.swift */,
+				A542CFBC21A090BC00C866CC /* HTTPmethod.swift */,
+				A542CFBD21A090BC00C866CC /* Endpoint.swift */,
+			);
+			path = "Generic API";
 			sourceTree = "<group>";
 		};
 		A589F38B1ECCBE4D00ACE8FD = {
@@ -146,10 +171,11 @@
 		A589F3F11ED091B500ACE8FD /* API */ = {
 			isa = PBXGroup;
 			children = (
-				A530305A219CD77300044874 /* HTTPMethod.swift */,
-				A5C7D35E20C9D920007D95D0 /* API.swift */,
+				A542CFC621A0994800C866CC /* GitRepoAPIClient.swift */,
+				A542CFC421A0959200C866CC /* GetRepoEndpoint.swift */,
 				A5EE7E291FF262FA007A00A7 /* GitRepoService.swift */,
-				A589F3F21ED091B500ACE8FD /* RequestsProvider.swift */,
+				A542CFB721A090BC00C866CC /* Generic API */,
+				A5C7D35E20C9D920007D95D0 /* API.swift */,
 			);
 			path = API;
 			sourceTree = "<group>";
@@ -275,19 +301,25 @@
 				A5577D08219CCEB300E273ED /* UITableView+Reusable.swift in Sources */,
 				A589F3DD1ED0915100ACE8FD /* AppDelegate.swift in Sources */,
 				A5066ADA20CC7C900005D631 /* RepoTableViewCell.swift in Sources */,
+				A542CFBE21A090BC00C866CC /* NetworkOperation.swift in Sources */,
+				A542CFC021A090BC00C866CC /* APIClient.swift in Sources */,
 				A5577D06219CCEA900E273ED /* UIView+Extensions.swift in Sources */,
-				A530305B219CD77300044874 /* HTTPMethod.swift in Sources */,
+				A542CFC321A090BC00C866CC /* Endpoint.swift in Sources */,
+				A542CFC521A0959200C866CC /* GetRepoEndpoint.swift in Sources */,
 				A5066AE120CC89650005D631 /* GitRepoStore.swift in Sources */,
 				A55B497120CBF8700015F0AC /* NSObject+Extensions.swift in Sources */,
 				A5577D0A219CCEF600E273ED /* ErrorPresenter.swift in Sources */,
 				A5066AD620CC16200005D631 /* Constants.swift in Sources */,
-				A589F3F71ED091B500ACE8FD /* RequestsProvider.swift in Sources */,
+				A542CFC221A090BC00C866CC /* HTTPmethod.swift in Sources */,
+				A542CFBF21A090BC00C866CC /* APIError.swift in Sources */,
 				A5EE7E2A1FF262FA007A00A7 /* GitRepoService.swift in Sources */,
 				A643A052219B08C800946BF7 /* LocalStorage.swift in Sources */,
 				A5066ADE20CC83780005D631 /* GitRepoCellModel.swift in Sources */,
 				A5C7D35F20C9D920007D95D0 /* API.swift in Sources */,
+				A542CFC721A0994800C866CC /* GitRepoAPIClient.swift in Sources */,
 				A5A18891200E0D84002FD583 /* RepoListDataSource.swift in Sources */,
 				A5066AE320CD49170005D631 /* Page.swift in Sources */,
+				A542CFC121A090BC00C866CC /* AsynchronousOperation.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
