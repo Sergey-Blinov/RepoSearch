@@ -8,39 +8,52 @@
 
 import Foundation
 
+extension UserDefaults : KeyValueStore {}
+
 protocol KeyValueStore {
     func object(forKey defaultName: String) -> Any?
     func set(_ value: Any?, forKey defaultName: String) -> Void
     func removeObject(forKey defaultName: String) -> Void
 }
 
-extension UserDefaults : KeyValueStore {}
-
 class LocalStorage {
     static let shared = LocalStorage()
-
-    let keyValueStore : KeyValueStore
-
-    init(keyValueStore: KeyValueStore = UserDefaults.standard) {
+    
+    var keyValueStore: KeyValueStore
+    var fileManager: FileManager
+    
+    init(keyValueStore: KeyValueStore = UserDefaults.standard, fileManger: FileManager = FileManager.default) {
         self.keyValueStore = keyValueStore
+        self.fileManager = fileManger
     }
     
     var gitItems: [GitRepo]? {
         get {
-            guard let placesData = keyValueStore.object(forKey: REPO_ITEMS) as? Data,
-                let placesArray = NSKeyedUnarchiver.unarchiveObject(with: placesData) as? [GitRepo]
-                else { return nil }
-            
-            return placesArray
+            guard let data = NSKeyedUnarchiver.unarchiveObject(withFile: repoItemsFilePath) as? Data else { return nil }
+            do {
+                let products = try PropertyListDecoder().decode([GitRepo].self, from: data)
+                return products
+            } catch {
+                print("Retrieve Failed")
+                return nil
+            }
         }
         set {
-            let placesData = NSKeyedArchiver.archivedData(withRootObject: newValue as Any)
-            keyValueStore.set(placesData, forKey: REPO_ITEMS)
+            do {
+                let data = try PropertyListEncoder().encode(newValue)
+                let success = NSKeyedArchiver.archiveRootObject(data, toFile: repoItemsFilePath)
+                print(success ? "Successful save" : "Save Failed")
+            } catch {
+                print("Save Failed")
+            }
         }
     }
-
+    
     func clearItems() {
-        keyValueStore.removeObject(forKey: REPO_ITEMS)
+        try? fileManager.removeItem(atPath: repoItemsFilePath)
     }
-
+    
+    var repoItemsFilePath: String {
+        return fileManager.urls(for: .documentDirectory, in: .userDomainMask)[0].appendingPathComponent(REPO_ITEMS).path
+    }
 }

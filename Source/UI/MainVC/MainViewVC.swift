@@ -65,7 +65,7 @@ extension MainVC: GitRepoLoadingDelegate {
         errorPresenter.present(in: self)
     }
     
-    func didSelect(_ item: GitRepo) {
+    func didSelect(_ item: GitRepoViewModel) {
         self.presenSelectedItem(item)
     }
 }
@@ -120,8 +120,8 @@ private extension MainVC {
         self.tableView.backgroundView = activityIndicatorView
     }
     
-    func presenSelectedItem(_ item: GitRepo) -> Void {
-        self.selectedItemUrlString = item.urlString
+    func presenSelectedItem(_ item: GitRepoViewModel) -> Void {
+        self.selectedItemUrlString = item.stringURL
         self.performSegue(withIdentifier:RepoWebViewVC.className, sender: self)
     }
 }

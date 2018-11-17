@@ -13,7 +13,7 @@ class RepoTableViewCell: UITableViewCell, NibReusable {
     @IBOutlet var languageLabel: UILabel!
     @IBOutlet var starsCountLabel: UILabel!
     
-    public func fillWith(_ model: GitRepoCellModel) {
+    func fillWith(_ model: GitRepoViewModel) {
         self.titleLabel.text = model.name
         self.starsCountLabel.text = model.stars
         self.languageLabel.text = model.devLanguage
