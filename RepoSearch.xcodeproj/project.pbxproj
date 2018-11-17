@@ -11,7 +11,7 @@
 		A5066AD620CC16200005D631 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5066AD520CC16200005D631 /* Constants.swift */; };
 		A5066ADA20CC7C900005D631 /* RepoTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5066AD820CC7C900005D631 /* RepoTableViewCell.swift */; };
 		A5066ADB20CC7C900005D631 /* MainViewVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5066AD920CC7C900005D631 /* MainViewVC.swift */; };
-		A5066ADE20CC83780005D631 /* GitRepoCellModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5066ADD20CC83780005D631 /* GitRepoCellModel.swift */; };
+		A5066ADE20CC83780005D631 /*  GitRepoViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5066ADD20CC83780005D631 /*  GitRepoViewModel.swift */; };
 		A5066AE120CC89650005D631 /* GitRepoStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5066AE020CC89650005D631 /* GitRepoStore.swift */; };
 		A5066AE320CD49170005D631 /* Page.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5066AE220CD49170005D631 /* Page.swift */; };
 		A542CFBE21A090BC00C866CC /* NetworkOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = A542CFB821A090BC00C866CC /* NetworkOperation.swift */; };
@@ -44,7 +44,7 @@
 		A5066AD520CC16200005D631 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		A5066AD820CC7C900005D631 /* RepoTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RepoTableViewCell.swift; sourceTree = "<group>"; };
 		A5066AD920CC7C900005D631 /* MainViewVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainViewVC.swift; sourceTree = "<group>"; };
-		A5066ADD20CC83780005D631 /* GitRepoCellModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GitRepoCellModel.swift; sourceTree = "<group>"; };
+		A5066ADD20CC83780005D631 /*  GitRepoViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = " GitRepoViewModel.swift"; sourceTree = "<group>"; };
 		A5066AE020CC89650005D631 /* GitRepoStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GitRepoStore.swift; sourceTree = "<group>"; };
 		A5066AE220CD49170005D631 /* Page.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Page.swift; sourceTree = "<group>"; };
 		A542CFB821A090BC00C866CC /* NetworkOperation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworkOperation.swift; sourceTree = "<group>"; };
@@ -99,7 +99,7 @@
 		A5066ADC20CC83710005D631 /* ViewModels */ = {
 			isa = PBXGroup;
 			children = (
-				A5066ADD20CC83780005D631 /* GitRepoCellModel.swift */,
+				A5066ADD20CC83780005D631 /*  GitRepoViewModel.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -156,9 +156,9 @@
 		A589F3F01ED091B500ACE8FD /* Source */ = {
 			isa = PBXGroup;
 			children = (
+				A5066AD520CC16200005D631 /* Constants.swift */,
 				A5577D09219CCEF500E273ED /* ErrorPresenter.swift */,
 				A643A051219B08C800946BF7 /* LocalStorage.swift */,
-				A5066AD520CC16200005D631 /* Constants.swift */,
 				A58C7DD020CB1CE10058D29B /* Extensions */,
 				A589F3F11ED091B500ACE8FD /* API */,
 				A5066ADC20CC83710005D631 /* ViewModels */,
@@ -314,7 +314,7 @@
 				A542CFBF21A090BC00C866CC /* APIError.swift in Sources */,
 				A5EE7E2A1FF262FA007A00A7 /* GitRepoService.swift in Sources */,
 				A643A052219B08C800946BF7 /* LocalStorage.swift in Sources */,
-				A5066ADE20CC83780005D631 /* GitRepoCellModel.swift in Sources */,
+				A5066ADE20CC83780005D631 /*  GitRepoViewModel.swift in Sources */,
 				A5C7D35F20C9D920007D95D0 /* API.swift in Sources */,
 				A542CFC721A0994800C866CC /* GitRepoAPIClient.swift in Sources */,
 				A5A18891200E0D84002FD583 /* RepoListDataSource.swift in Sources */,

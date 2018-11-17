@@ -14,11 +14,9 @@ enum APIDefault {
 }
 
 class GitRepoAPIClient: APIClient {
-    
-    static var instance = GitRepoAPIClient()
-    
     private var host: String
     private var scheme: String
+    private var operationQueue: OperationQueue
     
     var baseUrlComponents: URLComponents {
         var components = URLComponents()
@@ -32,12 +30,13 @@ class GitRepoAPIClient: APIClient {
         return URLSession.shared
     }
     
-    init(host: String = APIDefault.host,scheme: String = APIDefault.scheme) {
+    init(host: String = APIDefault.host,
+         scheme: String = APIDefault.scheme,
+         queue: OperationQueue = OperationQueue()) {
         self.host = host
         self.scheme = scheme
+        self.operationQueue = queue
     }
-    
-    private let operationQueue = OperationQueue()
     
     func queueRequest<T:EndPoint>(for resource: T, completion: @escaping (APIResult<T>) -> Void) -> Operation {
         let operation = NetworkOperation<T>(client: self, resource: resource, completion: completion)

@@ -22,7 +22,8 @@ class LocalStorage {
     var keyValueStore: KeyValueStore
     var fileManager: FileManager
     
-    init(keyValueStore: KeyValueStore = UserDefaults.standard, fileManger: FileManager = FileManager.default) {
+    init(keyValueStore: KeyValueStore = UserDefaults.standard,
+         fileManger: FileManager = FileManager.default) {
         self.keyValueStore = keyValueStore
         self.fileManager = fileManger
     }
