@@ -57,9 +57,9 @@ extension GitRepoEndpoint {
         var parameters: [String : String] {
             return [GitRepoConstants.searchQuery : query,
                     GitRepoConstants.page : String(page.index),
-                GitRepoConstants.perPage : String(page.perPage),
-                GitRepoConstants.order : GitRepoConstants.desc,
-                GitRepoConstants.sort : GitRepoConstants.stars]
+                    GitRepoConstants.perPage : String(page.perPage),
+                    GitRepoConstants.order : GitRepoConstants.desc,
+                    GitRepoConstants.sort : GitRepoConstants.stars]
         }
         
         return parameters.map { URLQueryItem(name: $0.key, value: $0.value) }
