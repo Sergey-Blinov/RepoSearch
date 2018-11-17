@@ -27,7 +27,7 @@ class GitRepoService: GitRepoServiceProtocol {
                       query: String,
                       completionHandler: @escaping GitRepoServiceCompletionHandler<GitRepo>) {
         let resource = GitRepoEndpoint.items(page: page, query: query)
-        self.operations.append(GitRepoAPIClient.queueRequest(for: resource) { result in
+        self.operations.append(API.gitRepoClient.queueRequest(for: resource) { result in
             DispatchQueue.main.async {
                 switch result {
                 case .failure(let error):

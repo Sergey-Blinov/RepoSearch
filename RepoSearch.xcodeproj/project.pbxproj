@@ -171,11 +171,11 @@
 		A589F3F11ED091B500ACE8FD /* API */ = {
 			isa = PBXGroup;
 			children = (
+				A5C7D35E20C9D920007D95D0 /* API.swift */,
 				A542CFC621A0994800C866CC /* GitRepoAPIClient.swift */,
 				A542CFC421A0959200C866CC /* GetRepoEndpoint.swift */,
 				A5EE7E291FF262FA007A00A7 /* GitRepoService.swift */,
 				A542CFB721A090BC00C866CC /* Generic API */,
-				A5C7D35E20C9D920007D95D0 /* API.swift */,
 			);
 			path = API;
 			sourceTree = "<group>";

@@ -10,4 +10,5 @@ import Foundation
 
 enum API {
     static let gitRepoServise = GitRepoService()
+    static let gitRepoClient = GitRepoAPIClient()
 }

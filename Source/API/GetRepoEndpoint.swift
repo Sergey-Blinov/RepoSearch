@@ -65,4 +65,3 @@ extension GitRepoEndpoint {
         return parameters.map { URLQueryItem(name: $0.key, value: $0.value) }
     }
 }
-

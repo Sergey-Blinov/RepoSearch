@@ -8,15 +8,22 @@
 
 import Foundation
 
-class GitRepoAPIClient: APIClient {
-    static let defaultHost = "api.github.com"
-    static let defaultScheme = "https"
-    static let instance = GitRepoAPIClient()
+enum APIDefault {
+    static let host = "api.github.com"
+    static let scheme = "https"
+}
 
+class GitRepoAPIClient: APIClient {
+    
+    static var instance = GitRepoAPIClient()
+    
+    private var host: String
+    private var scheme: String
+    
     var baseUrlComponents: URLComponents {
         var components = URLComponents()
-        components.host = GitRepoAPIClient.defaultHost
-        components.scheme = GitRepoAPIClient.defaultScheme
+        components.host = host
+        components.scheme = scheme
         
         return components
     }
@@ -25,13 +32,16 @@ class GitRepoAPIClient: APIClient {
         return URLSession.shared
     }
     
-    private init() {}
+    init(host: String = APIDefault.host,scheme: String = APIDefault.scheme) {
+        self.host = host
+        self.scheme = scheme
+    }
     
     private let operationQueue = OperationQueue()
     
-    static func queueRequest<T:EndPoint>(for resource: T, completion: @escaping (APIResult<T>) -> Void) -> Operation {
-        let operation = NetworkOperation<T>(client: instance, resource: resource, completion: completion)
-        defer { instance.operationQueue.addOperation(operation) }
+    func queueRequest<T:EndPoint>(for resource: T, completion: @escaping (APIResult<T>) -> Void) -> Operation {
+        let operation = NetworkOperation<T>(client: self, resource: resource, completion: completion)
+        defer { self.operationQueue.addOperation(operation) }
         
         return operation
     }
