@@ -1,9 +1,9 @@
 //
-//  HTTPMethod.swift
-//  RepoSearch
+//  HTTPmethod.swift
+//  Generik API Client
 //
-//  Created by Sergey on 11/15/18.
-//  Copyright © 2018 Sergey Blinov. All rights reserved.
+//  Created by Sergey on 11/17/18.
+//  Copyright © 2018 sblinov.com. All rights reserved.
 //
 
 import Foundation
