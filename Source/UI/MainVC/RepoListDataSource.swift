@@ -48,14 +48,15 @@ class GitRepoListDataSource: NSObject {
     func searchRepositories(_ query: String) -> Void {
         self.loadingDelegate?.beginLoadItems()
         self.clearItems()
-        
-        self.gitRepoStore.getRepoItems(query: query,
-                                       success: { [weak self] items in
-                                        self?.loadingDelegate?.endLoadItems(nil)
-                                        guard let strongSelf = self else { return }
-                                        strongSelf.insert(items)
-        }) { error in
-           self.loadingDelegate?.endLoadItems(nil)
+        self.gitRepoStore.getRepoItems(query: query) { [weak self] result in
+            self?.loadingDelegate?.endLoadItems(nil)
+            guard let strongSelf = self else { return }
+            switch result {
+            case .success(let items):
+                strongSelf.insert(items)
+            case .failure(let error):
+                strongSelf.loadingDelegate?.endLoadItems(error)
+            }
         }
     }
 }

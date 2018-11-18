@@ -8,12 +8,10 @@
 
 import Foundation
 
-protocol Store { }
+typealias CompletionHandler<T> = (Result<[T]>) -> Void
 
-class GitRepoStore: Store {
-    
+class GitRepoStore {
     private var gitRepoService: GitRepoServiceProtocol
-    private var workItems = [DispatchWorkItem]()
     private var storage: LocalStorage
     
     init(service: GitRepoServiceProtocol, storage: LocalStorage = LocalStorage.shared) {
@@ -21,48 +19,36 @@ class GitRepoStore: Store {
         self.storage = storage
     }
     
-    func getRepoItems(query: String,
-                      success: @escaping (_ response: [GitRepo]) -> Void,
-                      failure: @escaping (_ error: Error?) -> Void) -> Void {
-        let group = DispatchGroup()
+    func getRepoItems(query: String, completionHandler: @escaping CompletionHandler<GitRepo>)  {
         var collection = [GitRepo]()
         
-        self.workItems = Array(1...PAGE_COUNT)
-            .map { (pageIndex: Int) -> (Page) in return Page(index: pageIndex, perPage: PER_PAGE) }
-            .map { (page: Page) -> (DispatchWorkItem) in
-                
-                let requestWorkItem = DispatchWorkItem(qos: .background) { [weak self] in
-                    group.enter()
-                    guard let strongSelf = self else { return }
-                    strongSelf.gitRepoService.getRepoItems(page: page,
-                                                           query: query) { result in
-                                                            group.leave()
-                                                            switch result {
-                                                            case .success(let items):
-                                                                collection.append(contentsOf: items)
-                                                            case .failure(_):
-                                                                break
-                                                            }
-                    }
-                }
-                
-                return requestWorkItem
-        }
-
-        self.workItems.forEach { if !$0.isCancelled { $0.perform() }}
-
-        group.notify(queue: .main) { [weak self] in
+        let completionOperation = BlockOperation {
             let items = collection.sorted { $0.starsCount! > $1.starsCount! }
-            guard let strongSelf = self else { return }
-            strongSelf.clearItems()
-            strongSelf.saveItems(items: items)
-            success(items)
+            completionHandler(.success(items))
+            self.clearItems()
+            self.saveItems(items: items)
         }
+        
+        let pages = Array(1...PAGE_COUNT) .map { (pageIndex: Int) -> (Page) in return Page(index: pageIndex, perPage: PER_PAGE) }
+        for page in pages {
+            let operation = self.gitRepoService.getRepoItems(page: page, query: query, completionHandler: {  result in
+                switch result {
+                case .success(let items):
+                    collection.append(contentsOf: items)
+                case .failure(let error):
+                    completionHandler(.failure(error))
+                    break
+                }
+            })
+            
+            completionOperation.addDependency(operation)
+        }
+        
+        OperationQueue.main.addOperation(completionOperation)
     }
     
     func cancelSearch() {
         self.gitRepoService.cancel()
-        self.workItems.forEach { $0.cancel() }
     }
     
     func saveItems(items: [GitRepo]) {

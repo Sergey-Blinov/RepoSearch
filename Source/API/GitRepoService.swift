@@ -14,9 +14,7 @@ enum Result<T> {
 }
 
 protocol GitRepoServiceProtocol: class {
-    typealias GitRepoServiceCompletionHandler<T> = (Result<[T]>) -> Void
-    
-    func getRepoItems(page: Page, query: String, completionHandler: @escaping GitRepoServiceCompletionHandler<GitRepo>)
+    func getRepoItems(page: Page, query: String, completionHandler: @escaping CompletionHandler<GitRepo>) -> Operation
     func cancel()
 }
 
@@ -25,18 +23,19 @@ class GitRepoService: GitRepoServiceProtocol {
     
     func getRepoItems(page: Page,
                       query: String,
-                      completionHandler: @escaping GitRepoServiceCompletionHandler<GitRepo>) {
+                      completionHandler: @escaping CompletionHandler<GitRepo>) -> Operation {
         let resource = GitRepoEndpoint.items(page: page, query: query)
-        self.operations.append(API.gitRepoClient.queueRequest(for: resource) { result in
-            DispatchQueue.main.async {
-                switch result {
-                case .failure(let error):
-                    completionHandler(.failure(error))
-                case .success(let result):
-                    completionHandler(.success(result.items))
-                }
+        let operation = API.gitRepoClient.queueRequest(for: resource) { result in
+            switch result {
+            case .failure(let error):
+                completionHandler(.failure(error))
+            case .success(let result):
+                completionHandler(.success(result.items))
             }
-        })
+        }
+        operations.append(operation)
+        
+        return operation
     }
     
     func cancel() {
