@@ -11,17 +11,17 @@ import Foundation
 class NetworkOperation<T:EndPoint>: AsynchronousOperation {
     private let completion: (APIResult<T>) -> Void
     private let client: APIClient
-    private let resource: T
+    private let endpoint: T
     
-    init(client: APIClient, resource: T, completion: @escaping (APIResult<T>) -> Void) {
+    init(client: APIClient, endpoint: T, completion: @escaping (APIResult<T>) -> Void) {
         self.completion = completion
         self.client = client
-        self.resource = resource
+        self.endpoint = endpoint
         super.init()
     }
     
     override func main() {
-        client.sendRequest(for: resource) { result in
+        client.sendRequest(for: endpoint) { result in
             Thread.isMainThread ? self.completion(result) : DispatchQueue.main.async { self.completion(result) }
             self.state = .finished
         }
